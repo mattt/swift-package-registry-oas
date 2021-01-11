@@ -1,0 +1,321 @@
+openapi: 3.0.0
+info:
+  title: Swift Package Registry
+  version: "1"
+externalDocs:
+  description: Swift Evolution Proposal SE-0292
+  url: https://github.com/apple/swift-evolution/blob/main/proposals/0292-package-registry-service.md
+servers:
+  - url: https://example.com
+paths:
+  "/{package}":
+    parameters:
+      - $ref: "#/components/parameters/package"
+    get:
+      tags:
+        - Package
+      summary: List package releases
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+            enum:
+              - application/vnd.swift.registry.v1+json
+      responses:
+        "200":
+          description: ""
+          headers:
+            Content-Version:
+              $ref: "#/components/headers/contentVersion"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/releases"
+              examples:
+                default:
+                  $ref: "#/components/examples/releases"
+        4XX:
+          $ref: "#/components/responses/problemDetails"
+  "/{package}/{version}":
+    parameters:
+      - $ref: "#/components/parameters/package"
+      - $ref: "#/components/parameters/version"
+    get:
+      tags:
+        - Release
+      summary: Fetch release metadata
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+            enum:
+              - application/vnd.swift.registry.v1+json
+      responses:
+        "200":
+          description: ""
+          headers:
+            Content-Version:
+              $ref: "#/components/headers/contentVersion"
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                default:
+                  $ref: "#/components/examples/metadata"
+        4XX:
+          $ref: "#/components/responses/problemDetails"
+  "/{package}/{version}/Package.swift":
+    parameters:
+      - $ref: "#/components/parameters/package"
+      - $ref: "#/components/parameters/version"
+    get:
+      tags:
+        - Release
+      summary: Fetch manifest for a package release
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+            enum:
+              - application/vnd.swift.registry.v1+swift
+        - $ref: "#/components/parameters/swift_version"
+      responses:
+        "200":
+          description: ""
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+            Content-Disposition:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            Content-Version:
+              $ref: "#/components/headers/contentVersion"
+            Etag:
+              schema:
+                type: string
+            Link:
+              schema:
+                type: string
+          content:
+            text/x-swift:
+              schema:
+                type: string
+              examples:
+                default:
+                  $ref: "#/components/examples/manifest"
+        4XX:
+          $ref: "#/components/responses/problemDetails"
+  "/{package}/{version}.zip":
+    parameters:
+      - $ref: "#/components/parameters/package"
+      - $ref: "#/components/parameters/version"
+    get:
+      tags:
+        - Release
+      summary: Download source archive
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+            enum:
+              - application/vnd.swift.registry.v1+zip
+      responses:
+        "200":
+          description: ""
+          headers:
+            Accept-Ranges:
+              schema:
+                type: string
+            Cache-Control:
+              schema:
+                type: string
+            Content-Disposition:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            Content-Version:
+              $ref: "#/components/headers/contentVersion"
+            Digest:
+              required: true
+              schema:
+                type: string
+            Etag:
+              schema:
+                type: string
+            Link:
+              schema:
+                type: string
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        4XX:
+          $ref: "#/components/responses/problemDetails"
+components:
+  schemas:
+    releases:
+      type: object
+      example: |-
+        {
+            "releases": {
+                "1.1.0": "https://swift.pkg.github.com/mona/LinkedList/1.1.0"
+            }
+        }
+      properties:
+        releases:
+          type: object
+      required:
+        - releases
+    problem:
+      type: object
+      externalDocs:
+        url: https://tools.ietf.org/html/rfc7807
+      example: |-
+        {
+            "type": "https://example.com/probs/out-of-credit",
+            "title": "You do not have enough credit.",
+            "detail": "Your current balance is 30, but that costs 50.",
+            "instance": "/account/12345/msgs/abc",
+            "balance": 30,
+            "accounts": ["/account/12345", "/account/67890"]
+        }
+      properties:
+        detail:
+          type: string
+        status:
+          type: number
+        instance:
+          type: string
+        type:
+          type: string
+          format: uriref
+        title:
+          type: string
+      required:
+        - detail
+        - instance
+        - status
+        - title
+        - type
+  responses:
+    problemDetails:
+      description: A client error.
+      headers:
+        Content-Version:
+          $ref: "#/components/headers/contentVersion"
+        Content-Language:
+          schema:
+            type: string
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/problem"
+  parameters:
+    package:
+      name: package
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uri
+        example: github.com/mona/LinkedList
+    version:
+      name: version
+      in: path
+      required: true
+      schema:
+        type: string
+        externalDocs:
+          description: Semantic Version number
+          url: https://semver.org
+        example: 1.0.0-beta.1
+        pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$
+    swift_version:
+      name: swift-version
+      in: query
+      schema:
+        type: string
+        example: 1.2.3
+        pattern: \d+(?:\.(\d+)){0,2}
+  examples:
+    releases:
+      value: |-
+        {
+            "releases": {
+                "1.1.1": {
+                    "url": "https://swift.pkg.github.com/mona/LinkedList/1.1.1"
+                },
+                "1.1.0": {
+                    "url": "https://swift.pkg.github.com/mona/LinkedList/1.1.0",
+                    "problem": {
+                        "status": 410,
+                        "title": "Gone",
+                        "detail": "this release was removed from the registry"
+                    }
+                },
+                "1.0.0": {
+                    "url": "https://swift.pkg.github.com/mona/LinkedList/1.0.0"
+                }
+            }
+        }
+    manifest:
+      value: >-
+        // swift-tools-version:5.0
+
+        import PackageDescription
+
+
+        let package = Package(
+            name: "LinkedList",
+            products: [
+                .library(name: "LinkedList", targets: ["LinkedList"])
+            ],
+            targets: [
+                .target(name: "LinkedList"),
+                .testTarget(name: "LinkedListTests", dependencies: ["LinkedList"]),
+            ],
+            swiftLanguageVersions: [.v4, .v5]
+        )
+    metadata:
+      value: |-
+        {
+            "@context": ["http://schema.org/"],
+            "@type": "SoftwareSourceCode",
+            "name": "LinkedList",
+            "description": "One thing links to another.",
+            "keywords": ["data-structure", "collection"],
+            "version": "1.1.1",
+            "codeRepository": "https://github.com/mona/LinkedList",
+            "license": "https://www.apache.org/licenses/LICENSE-2.0",
+            "programmingLanguage": {
+                "@type": "ComputerLanguage",
+                "name": "Swift",
+                "url": "https://swift.org"
+            },
+            "author": {
+                "@type": "Person",
+                "@id": "https://example.com/mona",
+                "givenName": "Mona",
+                "middleName": "Lisa",
+                "familyName": "Octocat"
+            }
+        }
+  headers:
+    contentVersion:
+      required: true
+      schema:
+        type: string
+        enum:
+          - - "1"
