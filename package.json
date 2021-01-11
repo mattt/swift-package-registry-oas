@@ -1,0 +1,9 @@
+{
+  "name": "swift-package-registry-oas",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "redoc-cli": "^0.10.2",
+    "yaml": "^1.10.0"
+  }
+}

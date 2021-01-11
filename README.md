@@ -1,27 +1,23 @@
-# Package Registry OpenAPI Specification Generator
+# Swift Package Registry - OpenAPI Specification Generator
+
+## Requirements
+
+- Swift 5.3+
+- Node v14+
+- npm
 
 ## Usage
+
+Build and run the `generate` executable to print the specification to `stdout`.
 
 ```terminal
 $ swift run generate
 ```
 
-## Example Output
+Run the following commands to generate a static HTML reference
+in the `dist` directory.
 
-```yaml
-openapi: 3.0.0
-info:
-  title: Swift Package Registry
-  description: ''
-  termsOfService: https://example.com/tos
-  contact:
-    name: Johnny Appleseed
-    url: https://example.com
-    email: johnny@example.com
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0.txt
-  version: '1'
-# ...
+```terminal
+$ npm install
+$ npx gulp
 ```
-
