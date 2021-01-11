@@ -192,17 +192,17 @@ components:
             "accounts": ["/account/12345", "/account/67890"]
         }
       properties:
-        instance:
-          type: string
-        type:
-          type: string
-          format: uriref
         title:
+          type: string
+        instance:
           type: string
         status:
           type: number
         detail:
           type: string
+        type:
+          type: string
+          format: uriref
       required:
         - detail
         - instance
