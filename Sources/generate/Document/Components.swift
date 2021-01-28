@@ -47,12 +47,20 @@ let components: OpenAPI.Components = {
     }()
 
     let parameters: OpenAPI.ComponentDictionary<OpenAPI.Parameter> = [
-        "package": OpenAPI.Parameter(name: "package",
+        "namespace": OpenAPI.Parameter(name: "namespace",
                                      context: .path,
-                                     schema: .string(format: .extended(.uri),
+                                     schema: .string(format: .generic,
                                                      required: true,
                                                      nullable: false,
-                                                     example: "github.com/mona/LinkedList")),
+                                                     pattern: #"\A[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,39}\z"#,
+                                                     example: "mona")),
+        "package": OpenAPI.Parameter(name: "package",
+                                     context: .path,
+                                     schema: .string(format: .generic,
+                                                     required: true,
+                                                     nullable: false,
+                                                     pattern: #"\A\p{ID_Start}\p{ID_Continue}*\z"#,
+                                                     example: "LinkedList")),
         "version": OpenAPI.Parameter(name: "version",
                                      context: .path,
                                      schema: .string(format: .generic,
