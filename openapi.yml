@@ -8,8 +8,9 @@ externalDocs:
 servers:
   - url: https://example.com
 paths:
-  "/{package}":
+  "/@{namespace}/{package}":
     parameters:
+      - $ref: "#/components/parameters/namespace"
       - $ref: "#/components/parameters/package"
     get:
       tags:
@@ -37,8 +38,9 @@ paths:
                   $ref: "#/components/examples/releases"
         4XX:
           $ref: "#/components/responses/problemDetails"
-  "/{package}/{version}":
+  "/@{namespace}/{package}/{version}":
     parameters:
+      - $ref: "#/components/parameters/namespace"
       - $ref: "#/components/parameters/package"
       - $ref: "#/components/parameters/version"
     get:
@@ -67,8 +69,9 @@ paths:
                   $ref: "#/components/examples/metadata"
         4XX:
           $ref: "#/components/responses/problemDetails"
-  "/{package}/{version}/Package.swift":
+  "/@{namespace}/{package}/{version}/Package.swift":
     parameters:
+      - $ref: "#/components/parameters/namespace"
       - $ref: "#/components/parameters/package"
       - $ref: "#/components/parameters/version"
     get:
@@ -113,8 +116,9 @@ paths:
                   $ref: "#/components/examples/manifest"
         4XX:
           $ref: "#/components/responses/problemDetails"
-  "/{package}/{version}.zip":
+  "/@{namespace}/{package}/{version}.zip":
     parameters:
+      - $ref: "#/components/parameters/namespace"
       - $ref: "#/components/parameters/package"
       - $ref: "#/components/parameters/version"
     get:
@@ -194,15 +198,15 @@ components:
       properties:
         title:
           type: string
-        instance:
-          type: string
-        status:
-          type: number
         detail:
+          type: string
+        instance:
           type: string
         type:
           type: string
           format: uriref
+        status:
+          type: number
       required:
         - detail
         - instance
@@ -223,14 +227,22 @@ components:
           schema:
             $ref: "#/components/schemas/problem"
   parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      schema:
+        type: string
+        example: mona
+        pattern: \A[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,39}\z
     package:
       name: package
       in: path
       required: true
       schema:
         type: string
-        format: uri
-        example: github.com/mona/LinkedList
+        example: LinkedList
+        pattern: \A\p{ID_Start}\p{ID_Continue}*\z
     version:
       name: version
       in: path
