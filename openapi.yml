@@ -6,7 +6,7 @@ externalDocs:
   description: Swift Evolution Proposal SE-0292
   url: https://github.com/apple/swift-evolution/blob/main/proposals/0292-package-registry-service.md
 servers:
-  - url: https://example.com
+  - url: https://packages.swift.org
 paths:
   "/@{namespace}/{package}":
     parameters:
@@ -196,17 +196,17 @@ components:
             "accounts": ["/account/12345", "/account/67890"]
         }
       properties:
-        title:
-          type: string
+        status:
+          type: number
         detail:
           type: string
         instance:
           type: string
+        title:
+          type: string
         type:
           type: string
           format: uriref
-        status:
-          type: number
       required:
         - detail
         - instance
@@ -242,7 +242,7 @@ components:
       schema:
         type: string
         example: LinkedList
-        pattern: \A\p{ID_Start}\p{ID_Continue}*\z
+        pattern: \A\p{XID_Start}\p{XID_Continue}*\z
     version:
       name: version
       in: path
@@ -318,7 +318,7 @@ components:
             },
             "author": {
                 "@type": "Person",
-                "@id": "https://example.com/mona",
+                "@id": "https://github.com/mona",
                 "givenName": "Mona",
                 "middleName": "Lisa",
                 "familyName": "Octocat"
