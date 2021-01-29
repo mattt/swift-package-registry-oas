@@ -8,7 +8,7 @@ externalDocs:
 servers:
   - url: https://packages.swift.org
 paths:
-  "/@{namespace}/{package}":
+  "/{namespace}/{package}":
     parameters:
       - $ref: "#/components/parameters/namespace"
       - $ref: "#/components/parameters/package"
@@ -38,7 +38,7 @@ paths:
                   $ref: "#/components/examples/releases"
         4XX:
           $ref: "#/components/responses/problemDetails"
-  "/@{namespace}/{package}/{version}":
+  "/{namespace}/{package}/{version}":
     parameters:
       - $ref: "#/components/parameters/namespace"
       - $ref: "#/components/parameters/package"
@@ -69,7 +69,7 @@ paths:
                   $ref: "#/components/examples/metadata"
         4XX:
           $ref: "#/components/responses/problemDetails"
-  "/@{namespace}/{package}/{version}/Package.swift":
+  "/{namespace}/{package}/{version}/Package.swift":
     parameters:
       - $ref: "#/components/parameters/namespace"
       - $ref: "#/components/parameters/package"
@@ -116,7 +116,7 @@ paths:
                   $ref: "#/components/examples/manifest"
         4XX:
           $ref: "#/components/responses/problemDetails"
-  "/@{namespace}/{package}/{version}.zip":
+  "/{namespace}/{package}/{version}.zip":
     parameters:
       - $ref: "#/components/parameters/namespace"
       - $ref: "#/components/parameters/package"
@@ -196,8 +196,6 @@ components:
             "accounts": ["/account/12345", "/account/67890"]
         }
       properties:
-        status:
-          type: number
         detail:
           type: string
         instance:
@@ -207,6 +205,8 @@ components:
         type:
           type: string
           format: uriref
+        status:
+          type: number
       required:
         - detail
         - instance
