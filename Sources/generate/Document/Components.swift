@@ -59,7 +59,7 @@ let components: OpenAPI.Components = {
                                      schema: .string(format: .generic,
                                                      required: true,
                                                      nullable: false,
-                                                     pattern: #"\A\p{ID_Start}\p{ID_Continue}*\z"#,
+                                                     pattern: #"\A\p{XID_Start}\p{XID_Continue}*\z"#,
                                                      example: "LinkedList")),
         "version": OpenAPI.Parameter(name: "version",
                                      context: .path,
