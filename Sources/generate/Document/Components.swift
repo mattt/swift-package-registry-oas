@@ -136,7 +136,7 @@ let components: OpenAPI.Components = {
                         },
                         "author": {
                             "@type": "Person",
-                            "@id": "https://example.com/mona",
+                            "@id": "https://github.com/mona",
                             "givenName": "Mona",
                             "middleName": "Lisa",
                             "familyName": "Octocat"
