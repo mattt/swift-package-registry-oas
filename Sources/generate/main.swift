@@ -2,7 +2,7 @@ import OpenAPIKit
 import Foundation
 import Yams
 
-let url = URL(string: "https://example.com")!
+let url = URL(string: "https://packages.swift.org")!
 
 let document = specification(for: url)
 try document.validate()
