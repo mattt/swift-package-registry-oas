@@ -198,15 +198,15 @@ components:
       properties:
         detail:
           type: string
+        status:
+          type: number
+        type:
+          type: string
+          format: uriref
         instance:
           type: string
         title:
           type: string
-        type:
-          type: string
-          format: uriref
-        status:
-          type: number
       required:
         - detail
         - instance
@@ -233,8 +233,8 @@ components:
       required: true
       schema:
         type: string
-        example: mona
-        pattern: \A[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,39}\z
+        example: "@mona"
+        pattern: \A@[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,39}\z
     package:
       name: package
       in: path
