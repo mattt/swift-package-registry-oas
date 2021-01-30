@@ -4,7 +4,7 @@ import Foundation
 let components: OpenAPI.Components = {
     let schemas: OpenAPI.ComponentDictionary<JSONSchema> = [
         "releases": .object(properties: [
-            "releases": .object // FIXME: OpenAPIKit is missing propertyNames parameter
+            "releases": .object
         ], example: #"""
                     {
                         "releases": {
