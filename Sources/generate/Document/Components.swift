@@ -5,13 +5,14 @@ let components: OpenAPI.Components = {
     let schemas: OpenAPI.ComponentDictionary<JSONSchema> = [
         "releases": .object(properties: [
             "releases": .object
-        ], example: #"""
+        ], example: try! .json(literal:
+                    #"""
                     {
                         "releases": {
                             "1.1.0": "https://swift.pkg.github.com/mona/LinkedList/1.1.0"
                         }
                     }
-                    """#),
+                    """#)),
         "problem": .object(
             externalDocs: .init(url: URL(string: "https://tools.ietf.org/html/rfc7807")!),
             properties: [
@@ -21,7 +22,8 @@ let components: OpenAPI.Components = {
                 "detail": .string,
                 "instance": .string
             ],
-            example: #"""
+            example: try! .json(literal:
+                    #"""
                      {
                          "type": "https://example.com/probs/out-of-credit",
                          "title": "You do not have enough credit.",
@@ -30,7 +32,7 @@ let components: OpenAPI.Components = {
                          "balance": 30,
                          "accounts": ["/account/12345", "/account/67890"]
                      }
-                     """#
+                     """#)
         )
     ]
 
