@@ -3,16 +3,19 @@ import Foundation
 
 let components: OpenAPI.Components = {
     let schemas: OpenAPI.ComponentDictionary<JSONSchema> = [
-        "releases": .object(properties: [
-            "releases": .object
-        ], example: try! .json(literal:
-                    #"""
-                    {
-                        "releases": {
-                            "1.1.0": "https://swift.pkg.github.com/mona/LinkedList/1.1.0"
-                        }
-                    }
-                    """#)),
+        "releases": .object(
+            properties: [
+                "releases": .object
+            ],
+            example: try! .decoding(json:
+                     #"""
+                     {
+                         "releases": {
+                             "1.1.0": "https://swift.pkg.github.com/mona/LinkedList/1.1.0"
+                         }
+                     }
+                     """#)
+        ),
         "problem": .object(
             externalDocs: .init(url: URL(string: "https://tools.ietf.org/html/rfc7807")!),
             properties: [
@@ -22,8 +25,8 @@ let components: OpenAPI.Components = {
                 "detail": .string,
                 "instance": .string
             ],
-            example: try! .json(literal:
-                    #"""
+            example: try! .decoding(json:
+                     #"""
                      {
                          "type": "https://example.com/probs/out-of-credit",
                          "title": "You do not have enough credit.",
