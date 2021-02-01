@@ -171,12 +171,9 @@ components:
   schemas:
     releases:
       type: object
-      example: |-
-        {
-            "releases": {
-                "1.1.0": "https://swift.pkg.github.com/mona/LinkedList/1.1.0"
-            }
-        }
+      example:
+        releases:
+          1.1.0: https://swift.pkg.github.com/mona/LinkedList/1.1.0
       properties:
         releases:
           type: object
@@ -186,25 +183,25 @@ components:
       type: object
       externalDocs:
         url: https://tools.ietf.org/html/rfc7807
-      example: |-
-        {
-            "type": "https://example.com/probs/out-of-credit",
-            "title": "You do not have enough credit.",
-            "detail": "Your current balance is 30, but that costs 50.",
-            "instance": "/account/12345/msgs/abc",
-            "balance": 30,
-            "accounts": ["/account/12345", "/account/67890"]
-        }
+      example:
+        accounts:
+          - /account/12345
+          - /account/67890
+        type: https://example.com/probs/out-of-credit
+        balance: 30
+        title: You do not have enough credit.
+        detail: Your current balance is 30, but that costs 50.
+        instance: /account/12345/msgs/abc
       properties:
         status:
           type: number
-        detail:
-          type: string
         instance:
           type: string
         type:
           type: string
           format: uriref
+        detail:
+          type: string
         title:
           type: string
       required:
@@ -263,25 +260,18 @@ components:
         pattern: \d+(?:\.(\d+)){0,2}
   examples:
     releases:
-      value: |-
-        {
-            "releases": {
-                "1.1.1": {
-                    "url": "https://swift.pkg.github.com/mona/LinkedList/1.1.1"
-                },
-                "1.1.0": {
-                    "url": "https://swift.pkg.github.com/mona/LinkedList/1.1.0",
-                    "problem": {
-                        "status": 410,
-                        "title": "Gone",
-                        "detail": "this release was removed from the registry"
-                    }
-                },
-                "1.0.0": {
-                    "url": "https://swift.pkg.github.com/mona/LinkedList/1.0.0"
-                }
-            }
-        }
+      value:
+        releases:
+          1.1.1:
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
+          1.1.0:
+            problem:
+              title: Gone
+              detail: this release was removed from the registry
+              status: 410
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
+          1.0.0:
+            url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
     manifest:
       value: >-
         // swift-tools-version:5.0
@@ -301,29 +291,28 @@ components:
             swiftLanguageVersions: [.v4, .v5]
         )
     metadata:
-      value: |-
-        {
-            "@context": ["http://schema.org/"],
-            "@type": "SoftwareSourceCode",
-            "name": "LinkedList",
-            "description": "One thing links to another.",
-            "keywords": ["data-structure", "collection"],
-            "version": "1.1.1",
-            "codeRepository": "https://github.com/mona/LinkedList",
-            "license": "https://www.apache.org/licenses/LICENSE-2.0",
-            "programmingLanguage": {
-                "@type": "ComputerLanguage",
-                "name": "Swift",
-                "url": "https://swift.org"
-            },
-            "author": {
-                "@type": "Person",
-                "@id": "https://github.com/mona",
-                "givenName": "Mona",
-                "middleName": "Lisa",
-                "familyName": "Octocat"
-            }
-        }
+      value:
+        "@context":
+          - http://schema.org/
+        codeRepository: https://github.com/mona/LinkedList
+        description: One thing links to another.
+        keywords:
+          - data-structure
+          - collection
+        "@type": SoftwareSourceCode
+        version: 1.1.1
+        name: LinkedList
+        author:
+          familyName: Octocat
+          "@type": Person
+          givenName: Mona
+          middleName: Lisa
+          "@id": https://github.com/mona
+        license: https://www.apache.org/licenses/LICENSE-2.0
+        programmingLanguage:
+          url: https://swift.org
+          name: Swift
+          "@type": ComputerLanguage
   headers:
     contentVersion:
       required: true
