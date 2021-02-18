@@ -8,10 +8,10 @@ externalDocs:
 servers:
   - url: https://packages.swift.org
 paths:
-  "/{namespace}/{package}":
+  "/{scope}/{name}":
     parameters:
-      - $ref: "#/components/parameters/namespace"
-      - $ref: "#/components/parameters/package"
+      - $ref: "#/components/parameters/scope"
+      - $ref: "#/components/parameters/name"
     get:
       tags:
         - Package
@@ -38,10 +38,10 @@ paths:
                   $ref: "#/components/examples/releases"
         4XX:
           $ref: "#/components/responses/problemDetails"
-  "/{namespace}/{package}/{version}":
+  "/{scope}/{name}/{version}":
     parameters:
-      - $ref: "#/components/parameters/namespace"
-      - $ref: "#/components/parameters/package"
+      - $ref: "#/components/parameters/scope"
+      - $ref: "#/components/parameters/name"
       - $ref: "#/components/parameters/version"
     get:
       tags:
@@ -69,10 +69,10 @@ paths:
                   $ref: "#/components/examples/metadata"
         4XX:
           $ref: "#/components/responses/problemDetails"
-  "/{namespace}/{package}/{version}/Package.swift":
+  "/{scope}/{name}/{version}/Package.swift":
     parameters:
-      - $ref: "#/components/parameters/namespace"
-      - $ref: "#/components/parameters/package"
+      - $ref: "#/components/parameters/scope"
+      - $ref: "#/components/parameters/name"
       - $ref: "#/components/parameters/version"
     get:
       tags:
@@ -116,10 +116,10 @@ paths:
                   $ref: "#/components/examples/manifest"
         4XX:
           $ref: "#/components/responses/problemDetails"
-  "/{namespace}/{package}/{version}.zip":
+  "/{scope}/{name}/{version}.zip":
     parameters:
-      - $ref: "#/components/parameters/namespace"
-      - $ref: "#/components/parameters/package"
+      - $ref: "#/components/parameters/scope"
+      - $ref: "#/components/parameters/name"
       - $ref: "#/components/parameters/version"
     get:
       tags:
@@ -186,20 +186,20 @@ components:
       example:
         instance: /account/12345/msgs/abc
         balance: 30
-        type: https://example.com/probs/out-of-credit
-        detail: Your current balance is 30, but that costs 50.
         accounts:
           - /account/12345
           - /account/67890
+        type: https://example.com/probs/out-of-credit
         title: You do not have enough credit.
+        detail: Your current balance is 30, but that costs 50.
       properties:
-        detail:
-          type: string
-        instance:
+        title:
           type: string
         status:
           type: number
-        title:
+        instance:
+          type: string
+        detail:
           type: string
         type:
           type: string
@@ -224,16 +224,16 @@ components:
           schema:
             $ref: "#/components/schemas/problem"
   parameters:
-    namespace:
-      name: namespace
+    scope:
+      name: scope
       in: path
       required: true
       schema:
         type: string
         example: "@mona"
         pattern: \A@[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,39}\z
-    package:
-      name: package
+    name:
+      name: name
       in: path
       required: true
       schema:
@@ -262,16 +262,16 @@ components:
     releases:
       value:
         releases:
+          1.1.0:
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
+            problem:
+              status: 410
+              title: Gone
+              detail: this release was removed from the registry
           1.1.1:
             url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
           1.0.0:
             url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
-          1.1.0:
-            problem:
-              title: Gone
-              detail: this release was removed from the registry
-              status: 410
-            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
     manifest:
       value: >-
         // swift-tools-version:5.0
@@ -292,27 +292,27 @@ components:
         )
     metadata:
       value:
-        programmingLanguage:
-          name: Swift
-          "@type": ComputerLanguage
-          url: https://swift.org
-        name: LinkedList
-        version: 1.1.1
-        codeRepository: https://github.com/mona/LinkedList
+        author:
+          middleName: Lisa
+          familyName: Octocat
+          givenName: Mona
+          "@type": Person
+          "@id": https://github.com/mona
         keywords:
           - data-structure
           - collection
-        author:
-          familyName: Octocat
-          "@id": https://github.com/mona
-          middleName: Lisa
-          givenName: Mona
-          "@type": Person
+        license: https://www.apache.org/licenses/LICENSE-2.0
+        version: 1.1.1
+        codeRepository: https://github.com/mona/LinkedList
+        name: LinkedList
+        "@type": SoftwareSourceCode
+        programmingLanguage:
+          url: https://swift.org
+          "@type": ComputerLanguage
+          name: Swift
         "@context":
           - http://schema.org/
         description: One thing links to another.
-        license: https://www.apache.org/licenses/LICENSE-2.0
-        "@type": SoftwareSourceCode
   headers:
     contentVersion:
       required: true
