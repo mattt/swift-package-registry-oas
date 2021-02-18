@@ -2,10 +2,10 @@ import OpenAPIKit
 import Foundation
 
 var paths: OpenAPI.PathItem.Map = [
-    "/{namespace}/{package}": .init(
+    "/{scope}/{name}": .init(
         parameters: [
-            .reference(.component(named: "namespace")),
-            .reference(.component(named: "package"))
+            .reference(.component(named: "scope")),
+            .reference(.component(named: "name"))
         ],
         get: .init(
             tags: ["Package"],
@@ -31,10 +31,10 @@ var paths: OpenAPI.PathItem.Map = [
         )
     ),
 
-    "/{namespace}/{package}/{version}": .init(
+    "/{scope}/{name}/{version}": .init(
         parameters: [
-            .reference(.component(named: "namespace")),
-            .reference(.component(named: "package")),
+            .reference(.component(named: "scope")),
+            .reference(.component(named: "name")),
             .reference(.component(named: "version"))
         ],
         get: .init(
@@ -61,10 +61,10 @@ var paths: OpenAPI.PathItem.Map = [
         )
     ),
 
-    "/{namespace}/{package}/{version}/Package.swift": .init(
+    "/{scope}/{name}/{version}/Package.swift": .init(
         parameters: [
-            .reference(.component(named: "namespace")),
-            .reference(.component(named: "package")),
+            .reference(.component(named: "scope")),
+            .reference(.component(named: "name")),
             .reference(.component(named: "version"))
         ],
         get: .init(
@@ -99,10 +99,10 @@ var paths: OpenAPI.PathItem.Map = [
         )
     ),
 
-    "/{namespace}/{package}/{version}.zip": .init(
+    "/{scope}/{name}/{version}.zip": .init(
         parameters: [
-            .reference(.component(named: "namespace")),
-            .reference(.component(named: "package")),
+            .reference(.component(named: "scope")),
+            .reference(.component(named: "name")),
             .reference(.component(named: "version"))
         ],
         get: .init(
