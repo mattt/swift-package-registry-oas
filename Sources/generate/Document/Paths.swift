@@ -133,6 +133,34 @@ var paths: OpenAPI.PathItem.Map = [
                 .range(.clientError): .reference(.component(named: "problemDetails"))
             ]
         )
-    )
+    ),
+
+    "/identifiers": .init(
+        parameters: [
+            .reference(.component(named: "url")),
+        ],
+        get: .init(
+            tags: ["Package"],
+            summary: "Lookup package identifiers registered for a URL",
+            parameters: [
+                .parameter(.contentType(allowedValues: [.vnd_swift_registry("json")]))
+            ],
+            responses: [
+                200: .response(
+                    description: "",
+                    headers: [
+                        "Content-Version": .reference(.component(named: "contentVersion"))
+                    ],
+                    content: [
+                        .json: .init(schema: .reference(.component(named: "identifiers")),
+                                     examples: [
+                                        "default": .reference(.component(named: "identifiers"))
+                                     ])
+                    ]
+                ),
+                .range(.clientError): .reference(.component(named: "problemDetails"))
+            ]
+        )
+    ),
 ]
 

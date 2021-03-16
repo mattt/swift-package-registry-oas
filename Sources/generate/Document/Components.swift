@@ -16,6 +16,19 @@ let components: OpenAPI.Components = {
                      }
                      """#)
         ),
+        "identifiers": .object(
+            properties: [
+                "identifiers": .array
+            ],
+            example: try! .decoding(json:
+                     #"""
+                     {
+                         "identifiers": [
+                           "@mona/LinkedList"
+                         ]
+                     }
+                     """#)
+        ),
         "problem": .object(
             externalDocs: .init(url: URL(string: "https://tools.ietf.org/html/rfc7807")!),
             properties: [
@@ -84,7 +97,14 @@ let components: OpenAPI.Components = {
                                                            required: true,
                                                            nullable: false,
                                                            pattern: #"\d+(?:\.(\d+)){0,2}"#,
-                                                           example: "1.2.3"))
+                                                           example: "1.2.3")),
+        "url": OpenAPI.Parameter(name: "url",
+                                 context: .query(required: true,
+                                                 allowEmptyValue: false),
+                                 schema: .string(format: .other("url"),
+                                                 required: true,
+                                                 nullable: false,
+                                                 example: "https://github.com/mona/LinkedList"))
     ]
 
     let examples: OpenAPI.ComponentDictionary<OpenAPI.Example> = [
@@ -147,7 +167,14 @@ let components: OpenAPI.Components = {
                             "familyName": "Octocat"
                         }
                     }
-                    """#
+                    """#,
+        "identifiers": #"""
+                        {
+                            "identifiers": [
+                              "@mona/LinkedList"
+                            ]
+                        }
+                        """#
     ]
 
     let headers: OpenAPI.ComponentDictionary<OpenAPI.Header> = [
