@@ -167,6 +167,35 @@ paths:
                 format: binary
         4XX:
           $ref: "#/components/responses/problemDetails"
+  /identifiers:
+    parameters:
+      - $ref: "#/components/parameters/url"
+    get:
+      tags:
+        - Package
+      summary: Lookup package identifiers registered for a URL
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+            enum:
+              - application/vnd.swift.registry.v1+json
+      responses:
+        "200":
+          description: ""
+          headers:
+            Content-Version:
+              $ref: "#/components/headers/contentVersion"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/identifiers"
+              examples:
+                default:
+                  $ref: "#/components/examples/identifiers"
+        4XX:
+          $ref: "#/components/responses/problemDetails"
 components:
   schemas:
     releases:
@@ -179,31 +208,41 @@ components:
           type: object
       required:
         - releases
+    identifiers:
+      type: object
+      example:
+        identifiers:
+          - "@mona/LinkedList"
+      properties:
+        identifiers:
+          type: array
+      required:
+        - identifiers
     problem:
       type: object
       externalDocs:
         url: https://tools.ietf.org/html/rfc7807
       example:
-        instance: /account/12345/msgs/abc
+        type: https://example.com/probs/out-of-credit
+        detail: Your current balance is 30, but that costs 50.
         balance: 30
         accounts:
           - /account/12345
           - /account/67890
-        type: https://example.com/probs/out-of-credit
+        instance: /account/12345/msgs/abc
         title: You do not have enough credit.
-        detail: Your current balance is 30, but that costs 50.
       properties:
         title:
-          type: string
-        status:
-          type: number
-        instance:
           type: string
         detail:
           type: string
         type:
           type: string
           format: uriref
+        instance:
+          type: string
+        status:
+          type: number
       required:
         - detail
         - instance
@@ -258,20 +297,28 @@ components:
         type: string
         example: 1.2.3
         pattern: \d+(?:\.(\d+)){0,2}
+    url:
+      name: url
+      in: query
+      required: true
+      schema:
+        type: string
+        format: url
+        example: https://github.com/mona/LinkedList
   examples:
     releases:
       value:
         releases:
+          1.0.0:
+            url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
           1.1.0:
             url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
             problem:
-              status: 410
               title: Gone
+              status: 410
               detail: this release was removed from the registry
           1.1.1:
             url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
-          1.0.0:
-            url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
     manifest:
       value: >-
         // swift-tools-version:5.0
@@ -292,27 +339,31 @@ components:
         )
     metadata:
       value:
-        author:
-          middleName: Lisa
-          familyName: Octocat
-          givenName: Mona
-          "@type": Person
-          "@id": https://github.com/mona
         keywords:
           - data-structure
           - collection
+        name: LinkedList
         license: https://www.apache.org/licenses/LICENSE-2.0
         version: 1.1.1
-        codeRepository: https://github.com/mona/LinkedList
-        name: LinkedList
-        "@type": SoftwareSourceCode
         programmingLanguage:
           url: https://swift.org
           "@type": ComputerLanguage
           name: Swift
+        codeRepository: https://github.com/mona/LinkedList
+        "@type": SoftwareSourceCode
+        author:
+          "@type": Person
+          givenName: Mona
+          middleName: Lisa
+          familyName: Octocat
+          "@id": https://github.com/mona
         "@context":
           - http://schema.org/
         description: One thing links to another.
+    identifiers:
+      value:
+        identifiers:
+          - "@mona/LinkedList"
   headers:
     contentVersion:
       required: true
