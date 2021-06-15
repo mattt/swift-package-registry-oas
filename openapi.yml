@@ -16,6 +16,7 @@ paths:
       tags:
         - Package
       summary: List package releases
+      operationId: listPackageReleases
       parameters:
         - name: Content-Type
           in: header
@@ -47,6 +48,7 @@ paths:
       tags:
         - Release
       summary: Fetch release metadata
+      operationId: fetchReleaseMetadata
       parameters:
         - name: Content-Type
           in: header
@@ -78,6 +80,7 @@ paths:
       tags:
         - Release
       summary: Fetch manifest for a package release
+      operationId: fetchManifestForPackageRelease
       parameters:
         - name: Content-Type
           in: header
@@ -125,6 +128,7 @@ paths:
       tags:
         - Release
       summary: Download source archive
+      operationId: downloadSourceArchive
       parameters:
         - name: Content-Type
           in: header
@@ -174,6 +178,7 @@ paths:
       tags:
         - Package
       summary: Lookup package identifiers registered for a URL
+      operationId: lookupPackageIdentifiersByURL
       parameters:
         - name: Content-Type
           in: header
@@ -224,25 +229,25 @@ components:
         url: https://tools.ietf.org/html/rfc7807
       example:
         type: https://example.com/probs/out-of-credit
-        detail: Your current balance is 30, but that costs 50.
+        title: You do not have enough credit.
         balance: 30
         accounts:
           - /account/12345
           - /account/67890
         instance: /account/12345/msgs/abc
-        title: You do not have enough credit.
+        detail: Your current balance is 30, but that costs 50.
       properties:
         title:
           type: string
+        instance:
+          type: string
+        status:
+          type: number
         detail:
           type: string
         type:
           type: string
           format: uriref
-        instance:
-          type: string
-        status:
-          type: number
       required:
         - detail
         - instance
@@ -311,14 +316,14 @@ components:
         releases:
           1.0.0:
             url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
+          1.1.1:
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
           1.1.0:
             url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
             problem:
-              title: Gone
               status: 410
+              title: Gone
               detail: this release was removed from the registry
-          1.1.1:
-            url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
     manifest:
       value: >-
         // swift-tools-version:5.0
@@ -339,27 +344,27 @@ components:
         )
     metadata:
       value:
+        description: One thing links to another.
+        version: 1.1.1
+        author:
+          givenName: Mona
+          "@id": https://github.com/mona
+          "@type": Person
+          middleName: Lisa
+          familyName: Octocat
+        name: LinkedList
+        programmingLanguage:
+          name: Swift
+          "@type": ComputerLanguage
+          url: https://swift.org
         keywords:
           - data-structure
           - collection
-        name: LinkedList
         license: https://www.apache.org/licenses/LICENSE-2.0
-        version: 1.1.1
-        programmingLanguage:
-          url: https://swift.org
-          "@type": ComputerLanguage
-          name: Swift
-        codeRepository: https://github.com/mona/LinkedList
-        "@type": SoftwareSourceCode
-        author:
-          "@type": Person
-          givenName: Mona
-          middleName: Lisa
-          familyName: Octocat
-          "@id": https://github.com/mona
         "@context":
           - http://schema.org/
-        description: One thing links to another.
+        codeRepository: https://github.com/mona/LinkedList
+        "@type": SoftwareSourceCode
     identifiers:
       value:
         identifiers:
