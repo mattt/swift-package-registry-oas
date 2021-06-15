@@ -10,6 +10,7 @@ var paths: OpenAPI.PathItem.Map = [
         get: .init(
             tags: ["Package"],
             summary: "List package releases",
+            operationId: "listPackageReleases",
             parameters: [
                 .parameter(.contentType(allowedValues: [.vnd_swift_registry("json")]))
             ],
@@ -40,6 +41,7 @@ var paths: OpenAPI.PathItem.Map = [
         get: .init(
             tags: ["Release"],
             summary: "Fetch release metadata",
+            operationId: "fetchReleaseMetadata",
             parameters: [
                 .parameter(.contentType(allowedValues: [.vnd_swift_registry("json")]))
             ],
@@ -70,6 +72,7 @@ var paths: OpenAPI.PathItem.Map = [
         get: .init(
             tags: ["Release"],
             summary: "Fetch manifest for a package release",
+            operationId: "fetchManifestForPackageRelease",
             parameters: [
                 .parameter(.contentType(allowedValues: [.vnd_swift_registry("swift")])),
                 .reference(.component(named: "swift_version"))
@@ -108,6 +111,7 @@ var paths: OpenAPI.PathItem.Map = [
         get: .init(
             tags: ["Release"],
             summary: "Download source archive",
+            operationId: "downloadSourceArchive",
             parameters: [
                 .parameter(.contentType(allowedValues: [.vnd_swift_registry("zip")]))
             ],
@@ -142,6 +146,7 @@ var paths: OpenAPI.PathItem.Map = [
         get: .init(
             tags: ["Package"],
             summary: "Lookup package identifiers registered for a URL",
+            operationId: "lookupPackageIdentifiersByURL",
             parameters: [
                 .parameter(.contentType(allowedValues: [.vnd_swift_registry("json")]))
             ],
