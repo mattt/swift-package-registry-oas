@@ -19,13 +19,13 @@ can be found [here](https://mattt.github.io/swift-package-registry-oas/).
 
 Build and run the `generate` executable to print the specification to `stdout`.
 
-```terminal
+```console
 $ swift run generate
 ```
 
 Run the following command to generate a static HTML reference
 in the `dist` directory:
 
-```terminal
+```console
 $ make
 ```
