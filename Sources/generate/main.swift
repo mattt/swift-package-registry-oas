@@ -1,6 +1,8 @@
-import OpenAPIKit
 import Foundation
+import OpenAPIKit
 import Yams
+
+import Specification
 
 let url = URL(string: "https://packages.swift.org")!
 
