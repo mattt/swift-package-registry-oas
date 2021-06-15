@@ -23,10 +23,9 @@ Build and run the `generate` executable to print the specification to `stdout`.
 $ swift run generate
 ```
 
-Run the following commands to generate a static HTML reference
-in the `dist` directory.
+Run the following command to generate a static HTML reference
+in the `dist` directory:
 
 ```terminal
-$ npm install
-$ npx gulp
+$ make
 ```

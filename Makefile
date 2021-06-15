@@ -13,16 +13,19 @@ SOURCES = $(wildcard $(srcdir)/**/*.swift)
 .DEFAULT_GOAL = all
 
 .PHONY: all
-all: $(DISTDIR)/index.html 
+all: $(DISTDIR)/index.html
 
-$(DISTDIR)/openapi.yml: $(SOURCES) | $(DISTDIR)/
+.node/node_modules:
+	@npm install --prefix .node
+
+$(DISTDIR)/openapi.yml: $(SOURCES) | $(DISTDIR)/ .node/node_modules
 	@npm run --prefix .node build
 
-$(DISTDIR)/index.html: $(DISTDIR)/openapi.yml | $(DISTDIR)/
+$(DISTDIR)/index.html: $(DISTDIR)/openapi.yml | $(DISTDIR)/ .node/node_modules
 	@npx --prefix .node redoc-cli bundle $< --output $@
 
 $(DISTDIR)/:
-	mkdir -p $@
+	@mkdir -p $@
 
 .PHONY: distclean
 distclean:
