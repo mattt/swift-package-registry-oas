@@ -1,10 +1,13 @@
 const fs = require("fs");
+const path = require("path");
 const { exec } = require("child_process");
 
 const YAML = require("yaml");
 
-if (!fs.existsSync("dist")) {
-    fs.mkdirSync("dist");
+const destination = "../dist";
+
+if (!fs.existsSync(destination)) {
+    fs.mkdirSync(destination);
 }
 
 exec("swift run generate", (error, stdout, stderr) => {
@@ -14,6 +17,6 @@ exec("swift run generate", (error, stdout, stderr) => {
     }
 
     const yaml = YAML.parse(stdout);
-    fs.writeFileSync("dist/openapi.yml", YAML.stringify(yaml));
+    fs.writeFileSync(path.join(destination, "openapi.yml"), YAML.stringify(yaml));
 });
 

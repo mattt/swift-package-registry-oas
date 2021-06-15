@@ -16,10 +16,10 @@ SOURCES = $(wildcard $(srcdir)/**/*.swift)
 all: $(DISTDIR)/index.html 
 
 $(DISTDIR)/openapi.yml: $(SOURCES) | $(DISTDIR)/
-	@npm run build
+	@npm run --prefix .node build
 
 $(DISTDIR)/index.html: $(DISTDIR)/openapi.yml | $(DISTDIR)/
-	@npx redoc-cli bundle $< --output $@
+	@npx --prefix .node redoc-cli bundle $< --output $@
 
 $(DISTDIR)/:
 	mkdir -p $@
