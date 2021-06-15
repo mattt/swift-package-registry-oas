@@ -228,26 +228,26 @@ components:
       externalDocs:
         url: https://tools.ietf.org/html/rfc7807
       example:
-        title: You do not have enough credit.
         detail: Your current balance is 30, but that costs 50.
-        type: https://example.com/probs/out-of-credit
+        balance: 30
         accounts:
           - /account/12345
           - /account/67890
+        title: You do not have enough credit.
+        type: https://example.com/probs/out-of-credit
         instance: /account/12345/msgs/abc
-        balance: 30
       properties:
-        type:
+        title:
           type: string
-          format: uriref
         detail:
           type: string
-        title:
+        instance:
           type: string
         status:
           type: number
-        instance:
+        type:
           type: string
+          format: uriref
       required:
         - detail
         - instance
@@ -314,16 +314,16 @@ components:
     releases:
       value:
         releases:
-          1.1.1:
-            url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
           1.1.0:
-            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
             problem:
-              detail: this release was removed from the registry
               title: Gone
+              detail: this release was removed from the registry
               status: 410
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
           1.0.0:
             url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
+          1.1.1:
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
     manifest:
       value: >-
         // swift-tools-version:5.0
@@ -344,27 +344,27 @@ components:
         )
     metadata:
       value:
-        author:
-          middleName: Lisa
-          "@id": https://github.com/mona
-          givenName: Mona
-          familyName: Octocat
-          "@type": Person
-        license: https://www.apache.org/licenses/LICENSE-2.0
-        programmingLanguage:
-          url: https://swift.org
-          "@type": ComputerLanguage
-          name: Swift
         keywords:
           - data-structure
           - collection
-        name: LinkedList
-        "@type": SoftwareSourceCode
+        license: MIT
         codeRepository: https://github.com/mona/LinkedList
+        name: LinkedList
         version: 1.1.1
-        description: One thing links to another.
+        programmingLanguage:
+          url: https://swift.org
+          name: Swift
+          "@type": ComputerLanguage
         "@context":
           - http://schema.org/
+        author:
+          familyName: Octocat
+          givenName: Mona
+          "@id": https://github.com/mona
+          "@type": Person
+          middleName: Lisa
+        description: One thing links to another.
+        "@type": SoftwareSourceCode
     identifiers:
       value:
         identifiers:
