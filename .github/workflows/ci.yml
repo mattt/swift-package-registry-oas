@@ -29,8 +29,27 @@ jobs:
         run: npm ci --prefix .node
       - name: Build
         run: make
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/main'
+
+    needs:
+      - build
+
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+      - name: Install rsync
+        run: |
+          apt-get update && apt-get install -y rsync
       - name: Deploy
-        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
