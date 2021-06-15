@@ -1,7 +1,7 @@
 import OpenAPIKit
 import struct Foundation.URL
 
-func specification(for url: URL) -> OpenAPI.Document {
+public func specification(for url: URL) -> OpenAPI.Document {
     return .init(
         openAPIVersion: .v3_0_0,
         info: apiInfo,

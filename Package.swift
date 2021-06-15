@@ -11,7 +11,18 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "Specification",
+            dependencies: [
+                .product(name: "OpenAPIKit", package: "OpenAPIKit"),
+            ]),
+        .target(
             name: "generate",
-            dependencies: ["OpenAPIKit", "Yams"])
+            dependencies: [
+                .target(name: "Specification"),
+                .product(name: "OpenAPIKit", package: "OpenAPIKit"),
+                .product(name: "Yams", package: "Yams")
+            ]),
+        .testTarget(name: "SpecificationTests",
+                    dependencies: ["Specification"])
     ]
 )
