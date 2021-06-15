@@ -153,7 +153,7 @@ let components: OpenAPI.Components = {
                         "keywords": ["data-structure", "collection"],
                         "version": "1.1.1",
                         "codeRepository": "https://github.com/mona/LinkedList",
-                        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+                        "license": "MIT",
                         "programmingLanguage": {
                             "@type": "ComputerLanguage",
                             "name": "Swift",
