@@ -24,7 +24,7 @@ let components: OpenAPI.Components = {
                      #"""
                      {
                          "identifiers": [
-                           "@mona/LinkedList"
+                           "mona.LinkedList"
                          ]
                      }
                      """#)
@@ -70,8 +70,8 @@ let components: OpenAPI.Components = {
                                    schema: .string(format: .generic,
                                                    required: true,
                                                    nullable: false,
-                                                   pattern: #"\A@[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,39}\z"#,
-                                                   example: "@mona")),
+                                                   pattern: #"\A[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,39}\z"#,
+                                                   example: "mona")),
         "name": OpenAPI.Parameter(name: "name",
                                   context: .path,
                                   schema: .string(format: .generic,
@@ -171,7 +171,7 @@ let components: OpenAPI.Components = {
         "identifiers": #"""
                         {
                             "identifiers": [
-                              "@mona/LinkedList"
+                              "mona.LinkedList"
                             ]
                         }
                         """#
