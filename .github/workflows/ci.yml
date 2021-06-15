@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     name: "Generate documentation"
 
+    container:
+      image: swift:5.3
+
     steps:
       - name: Checkout
         uses: actions/checkout@v1
