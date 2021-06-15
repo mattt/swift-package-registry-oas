@@ -228,23 +228,23 @@ components:
       externalDocs:
         url: https://tools.ietf.org/html/rfc7807
       example:
+        type: https://example.com/probs/out-of-credit
         detail: Your current balance is 30, but that costs 50.
-        balance: 30
+        title: You do not have enough credit.
         accounts:
           - /account/12345
           - /account/67890
-        title: You do not have enough credit.
-        type: https://example.com/probs/out-of-credit
+        balance: 30
         instance: /account/12345/msgs/abc
       properties:
         title:
-          type: string
-        detail:
           type: string
         instance:
           type: string
         status:
           type: number
+        detail:
+          type: string
         type:
           type: string
           format: uriref
@@ -314,16 +314,16 @@ components:
     releases:
       value:
         releases:
-          1.1.0:
-            problem:
-              title: Gone
-              detail: this release was removed from the registry
-              status: 410
-            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
           1.0.0:
             url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
           1.1.1:
             url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
+          1.1.0:
+            problem:
+              status: 410
+              detail: this release was removed from the registry
+              title: Gone
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
     manifest:
       value: >-
         // swift-tools-version:5.0
@@ -344,27 +344,27 @@ components:
         )
     metadata:
       value:
+        "@context":
+          - http://schema.org/
         keywords:
           - data-structure
           - collection
-        license: MIT
-        codeRepository: https://github.com/mona/LinkedList
         name: LinkedList
+        license: MIT
         version: 1.1.1
+        "@type": SoftwareSourceCode
+        description: One thing links to another.
         programmingLanguage:
-          url: https://swift.org
-          name: Swift
           "@type": ComputerLanguage
-        "@context":
-          - http://schema.org/
+          name: Swift
+          url: https://swift.org
         author:
-          familyName: Octocat
+          "@type": Person
           givenName: Mona
           "@id": https://github.com/mona
-          "@type": Person
           middleName: Lisa
-        description: One thing links to another.
-        "@type": SoftwareSourceCode
+          familyName: Octocat
+        codeRepository: https://github.com/mona/LinkedList
     identifiers:
       value:
         identifiers:
