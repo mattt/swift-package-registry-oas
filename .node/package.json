@@ -1,0 +1,15 @@
+{
+  "name": "swift-package-registry-oas",
+  "private": true,
+  "scripts": {
+    "build": "node index.js",
+    "watch": "nodemon -w Sources -e swift -x \"npm run build\""
+  },
+  "dependencies": {
+    "redoc-cli": "^0.12.1",
+    "yaml": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
