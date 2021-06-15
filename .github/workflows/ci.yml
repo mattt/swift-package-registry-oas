@@ -22,7 +22,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --prefix .node
       - name: Build
         run: make
       - name: Deploy
