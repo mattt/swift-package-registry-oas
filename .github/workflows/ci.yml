@@ -8,8 +8,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     name: "Generate documentation"
+
+    runs-on: ubuntu-latest
 
     container:
       image: swift:5.3
@@ -31,25 +32,26 @@ jobs:
         run: make
       - uses: actions/upload-artifact@v2
         with:
-          name: dist
+          name: site
           path: dist
 
   deploy:
-    runs-on: ubuntu-latest
+    name: "Publish to GitHub Pages"
 
+    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
     needs:
       - build
 
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
-          name: dist
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+          name: site
+          path: site
+      - uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist
-          CLEAN: true
+          branch: gh-pages
+          folder: site
+          clean: true
