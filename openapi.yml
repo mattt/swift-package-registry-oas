@@ -163,6 +163,8 @@ paths:
               schema:
                 type: string
                 format: binary
+        3XX:
+          $ref: "#/components/responses/redirect"
         4XX:
           $ref: "#/components/responses/problemDetails"
   /identifiers:
@@ -222,26 +224,26 @@ components:
       externalDocs:
         url: https://tools.ietf.org/html/rfc7807
       example:
-        instance: /account/12345/msgs/abc
+        detail: Your current balance is 30, but that costs 50.
         accounts:
           - /account/12345
           - /account/67890
-        title: You do not have enough credit.
-        detail: Your current balance is 30, but that costs 50.
-        balance: 30
+        instance: /account/12345/msgs/abc
         type: https://example.com/probs/out-of-credit
+        title: You do not have enough credit.
+        balance: 30
       properties:
         instance:
-          type: string
-        type:
-          type: string
-          format: uriref
-        detail:
           type: string
         status:
           type: number
         title:
           type: string
+        detail:
+          type: string
+        type:
+          type: string
+          format: uriref
       required:
         - detail
         - instance
@@ -261,6 +263,14 @@ components:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/problem"
+    redirect:
+      description: A server redirect.
+      headers:
+        Content-Version:
+          $ref: "#/components/headers/contentVersion"
+        Location:
+          schema:
+            type: string
   parameters:
     scope:
       name: scope
@@ -313,11 +323,11 @@ components:
           1.0.0:
             url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
           1.1.0:
-            problem:
-              status: 410
-              detail: this release was removed from the registry
-              title: Gone
             url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
+            problem:
+              title: Gone
+              detail: this release was removed from the registry
+              status: 410
     manifest:
       value: >-
         // swift-tools-version:5.0
@@ -338,27 +348,27 @@ components:
         )
     metadata:
       value:
+        name: LinkedList
         keywords:
           - data-structure
           - collection
+        "@type": SoftwareSourceCode
         license: MIT
         author:
-          givenName: Mona
           middleName: Lisa
+          "@type": Person
+          givenName: Mona
           familyName: Octocat
           "@id": https://github.com/mona
-          "@type": Person
         version: 1.1.1
-        "@type": SoftwareSourceCode
-        programmingLanguage:
-          "@type": ComputerLanguage
-          name: Swift
-          url: https://swift.org
-        name: LinkedList
-        "@context":
-          - http://schema.org/
         description: One thing links to another.
         codeRepository: https://github.com/mona/LinkedList
+        programmingLanguage:
+          name: Swift
+          "@type": ComputerLanguage
+          url: https://swift.org
+        "@context":
+          - http://schema.org/
     identifiers:
       value:
         identifiers:
