@@ -85,7 +85,6 @@ var paths: OpenAPI.PathItem.Map = [
                         "Content-Disposition": .header(.init(schema: .string)),
                         "Content-Length": .header(.init(schema: .integer)),
                         "Content-Version": .reference(.component(named: "contentVersion")),
-                        "Etag": .header(.init(schema: .string)),
                         "Link": .header(.init(schema: .string)),
                     ],
                     content: [
@@ -125,7 +124,6 @@ var paths: OpenAPI.PathItem.Map = [
                         "Content-Length": .header(.init(schema: .integer)),
                         "Content-Version": .reference(.component(named: "contentVersion")),
                         "Digest": .header(.init(schema: .string, required: true)),
-                        "Etag": .header(.init(schema: .string)),
                         "Link": .header(.init(schema: .string)),
                     ],
                     content: [
