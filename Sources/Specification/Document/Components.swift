@@ -60,7 +60,12 @@ let components: OpenAPI.Components = {
                                         "Content-Language": .header(.init(schema: .string))
                                     ], content: [
                                         .problem: .init(schemaReference: .component(named: "problem"))
-                                    ], vendorExtensions: [:])
+                                    ]),
+            "redirect": .init(description: "A server redirect.",
+                              headers: [
+                                  "Content-Version": .reference(.component(named: "contentVersion")),
+                                  "Location": .header(.init(schema: .string))
+                              ])
         ]
     }()
 

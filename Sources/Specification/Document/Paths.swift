@@ -132,6 +132,7 @@ var paths: OpenAPI.PathItem.Map = [
                                                     nullable: false))
                     ]
                 ),
+                .range(.redirect): .reference(.component(named: "redirect")),
                 .range(.clientError): .reference(.component(named: "problemDetails"))
             ]
         )
