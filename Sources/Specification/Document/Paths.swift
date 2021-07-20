@@ -18,7 +18,8 @@ var paths: OpenAPI.PathItem.Map = [
                 200: .response(
                     description: "",
                     headers: [
-                        "Content-Version": .reference(.component(named: "contentVersion"))
+                        "Content-Version": .reference(.component(named: "contentVersion")),
+                        "Content-Length": .header(.init(schema: .integer))
                     ],
                     content: [
                         .json: .init(schema: .reference(.component(named: "releases")),
@@ -49,7 +50,8 @@ var paths: OpenAPI.PathItem.Map = [
                 200: .response(
                     description: "",
                     headers: [
-                        "Content-Version": .reference(.component(named: "contentVersion"))
+                        "Content-Version": .reference(.component(named: "contentVersion")),
+                        "Content-Length": .header(.init(schema: .integer))
                     ],
                     content: [
                         .json: .init(schema: .object,

@@ -57,7 +57,8 @@ let components: OpenAPI.Components = {
             "problemDetails": .init(description: "A client error.",
                                     headers: [
                                         "Content-Version": .reference(.component(named: "contentVersion")),
-                                        "Content-Language": .header(.init(schema: .string))
+                                        "Content-Language": .header(.init(schema: .string)),
+                                        "Content-Length": .header(.init(schema: .integer))
                                     ], content: [
                                         .problem: .init(schemaReference: .component(named: "problem"))
                                     ]),
