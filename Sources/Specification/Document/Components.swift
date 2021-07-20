@@ -52,6 +52,32 @@ let components: OpenAPI.Components = {
         )
     ]
 
+    let requests: OpenAPI.ComponentDictionary<OpenAPI.Request> = {
+        return [
+            "releasePayload": .init(description: "", content: [
+                .multipartForm: .init(schema: .object(required: true, properties: [
+                    "source-archive": .string(format: .binary, required: true, description: "The source archive of the package."),
+                    "metadata": .object(format: .unspecified, required: false, description: "Additional information about the release."),
+                    "sbom": .object(format: .unspecified, required: false, description: "A software bill of materials.")
+                ]), encoding: [
+                    "source-archive": .init(contentType: .zip,
+                                            headers: [
+                                                "Content-Length": .header(.init(schema: .integer)),
+                                            ]),
+                    "metadata": .init(contentType: .json,
+                                      headers: [
+                                          "Content-Length": .header(.init(schema: .integer)),
+                                      ]),
+                    "source-archive": .init(contentType: .anyApplication,
+                                            headers: [
+                                                "Content-Length": .header(.init(schema: .integer)),
+                                            ])
+
+                ])
+            ], required: true, vendorExtensions: [:])
+        ]
+    }()
+
     let responses: OpenAPI.ComponentDictionary<OpenAPI.Response> = {
         return [
             "problemDetails": .init(description: "A client error.",
@@ -180,7 +206,23 @@ let components: OpenAPI.Components = {
                               "mona.LinkedList"
                             ]
                         }
-                        """#
+                        """#,
+        "sbom": #"""
+                 {
+                  "format": "CycloneDX",
+                  "serialNumber": "urn:uuid:73BB569B-52BA-4CA7-B2D1-C76CD5661C3C",
+                  "specVersion": "1.2",
+                  "metadata": {
+                      "timestamp": "2021-07-18T09:41:00Z"
+                  },
+                  "components": [
+                    {
+                      "classification": "library",
+                      "name": "LinkedList"
+                    }
+                  ]
+                }
+                """#
     ]
 
     let headers: OpenAPI.ComponentDictionary<OpenAPI.Header> = [

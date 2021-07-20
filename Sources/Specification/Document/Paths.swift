@@ -168,5 +168,38 @@ var paths: OpenAPI.PathItem.Map = [
             ]
         )
     ),
+
+    "/{scope}/{name}?version={version}": .init(
+        parameters: [
+            .reference(.component(named: "scope")),
+            .reference(.component(named: "name")),
+            .reference(.component(named: "version"))
+        ],
+        post: .init(
+            tags: ["Package"],
+            summary: "Publish package release",
+            operationId: "publishPackageRelease",
+            parameters: [
+                .parameter(.contentType(allowedValues: [.vnd_swift_registry("json")]))
+            ],
+            responses: [
+                100: .response(description: ""),
+                200: .response(
+                    description: "",
+                    headers: [
+                        "Content-Version": .reference(.component(named: "contentVersion")),
+                        "Content-Length": .header(.init(schema: .integer))
+                    ],
+                    content: [
+                        .json: .init(schema: .reference(.component(named: "releases")),
+                                     examples: [
+                                        "default": .reference(.component(named: "releases"))
+                                     ])
+                    ]
+                ),
+                .range(.clientError): .reference(.component(named: "problemDetails"))
+            ]
+        )
+    )
 ]
 
