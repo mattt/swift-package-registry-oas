@@ -30,6 +30,9 @@ paths:
           headers:
             Content-Version:
               $ref: "#/components/headers/contentVersion"
+            Content-Length:
+              schema:
+                type: integer
           content:
             application/json:
               schema:
@@ -62,6 +65,9 @@ paths:
           headers:
             Content-Version:
               $ref: "#/components/headers/contentVersion"
+            Content-Length:
+              schema:
+                type: integer
           content:
             application/json:
               schema:
@@ -224,26 +230,26 @@ components:
       externalDocs:
         url: https://tools.ietf.org/html/rfc7807
       example:
-        detail: Your current balance is 30, but that costs 50.
+        type: https://example.com/probs/out-of-credit
+        title: You do not have enough credit.
+        instance: /account/12345/msgs/abc
+        balance: 30
         accounts:
           - /account/12345
           - /account/67890
-        instance: /account/12345/msgs/abc
-        type: https://example.com/probs/out-of-credit
-        title: You do not have enough credit.
-        balance: 30
+        detail: Your current balance is 30, but that costs 50.
       properties:
         instance:
           type: string
         status:
           type: number
-        title:
-          type: string
-        detail:
-          type: string
         type:
           type: string
           format: uriref
+        detail:
+          type: string
+        title:
+          type: string
       required:
         - detail
         - instance
@@ -259,6 +265,9 @@ components:
         Content-Language:
           schema:
             type: string
+        Content-Length:
+          schema:
+            type: integer
       content:
         application/problem+json:
           schema:
@@ -318,16 +327,16 @@ components:
     releases:
       value:
         releases:
-          1.1.1:
-            url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
           1.0.0:
             url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
           1.1.0:
-            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
             problem:
-              title: Gone
-              detail: this release was removed from the registry
               status: 410
+              detail: this release was removed from the registry
+              title: Gone
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
+          1.1.1:
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
     manifest:
       value: >-
         // swift-tools-version:5.0
@@ -348,27 +357,27 @@ components:
         )
     metadata:
       value:
-        name: LinkedList
         keywords:
           - data-structure
           - collection
-        "@type": SoftwareSourceCode
-        license: MIT
-        author:
-          middleName: Lisa
-          "@type": Person
-          givenName: Mona
-          familyName: Octocat
-          "@id": https://github.com/mona
-        version: 1.1.1
-        description: One thing links to another.
-        codeRepository: https://github.com/mona/LinkedList
         programmingLanguage:
           name: Swift
-          "@type": ComputerLanguage
           url: https://swift.org
+          "@type": ComputerLanguage
+        "@type": SoftwareSourceCode
+        description: One thing links to another.
+        name: LinkedList
+        version: 1.1.1
         "@context":
           - http://schema.org/
+        codeRepository: https://github.com/mona/LinkedList
+        license: MIT
+        author:
+          familyName: Octocat
+          "@type": Person
+          givenName: Mona
+          "@id": https://github.com/mona
+          middleName: Lisa
     identifiers:
       value:
         identifiers:
