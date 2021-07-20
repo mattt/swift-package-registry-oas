@@ -3,12 +3,11 @@ SHELL = /bin/bash
 prefix ?= /usr/local
 bindir ?= $(prefix)/bin
 libdir ?= $(prefix)/lib
-srcdir = Sources
 
 REPODIR = $(shell pwd)
 BUILDDIR = $(REPODIR)/.build
 DISTDIR = $(REPODIR)/dist
-SOURCES = $(wildcard $(srcdir)/**/*.swift)
+SOURCES = $(wildcard $(REPODIR)/Sources/**/*.swift)
 
 .DEFAULT_GOAL = all
 
