@@ -169,7 +169,7 @@ var paths: OpenAPI.PathItem.Map = [
         )
     ),
 
-    "/{scope}/{name}?version={version}": .init(
+    "/{scope}/{name}/{version}": .init(
         parameters: [
             .reference(.component(named: "scope")),
             .reference(.component(named: "name")),
