@@ -184,7 +184,7 @@ var paths: OpenAPI.PathItem.Map = [
             ],
             responses: [
                 100: .response(description: ""),
-                200: .response(
+                201: .response(
                     description: "",
                     headers: [
                         "Content-Version": .reference(.component(named: "contentVersion")),
@@ -195,6 +195,14 @@ var paths: OpenAPI.PathItem.Map = [
                                      examples: [
                                         "default": .reference(.component(named: "releases"))
                                      ])
+                    ]
+                ),
+                202: .response(
+                    description: "",
+                    headers: [
+                        "Content-Version": .reference(.component(named: "contentVersion")),
+                        "Location": .header(.init(schema: .string)),
+                        "Retry-After": .header(.init(schema: .integer))
                     ]
                 ),
                 .range(.clientError): .reference(.component(named: "problemDetails"))
