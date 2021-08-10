@@ -62,6 +62,39 @@ var paths: OpenAPI.PathItem.Map = [
                 ),
                 .range(.clientError): .reference(.component(named: "problemDetails"))
             ]
+        ),
+        post: .init(
+            tags: ["Package"],
+            summary: "Publish package release",
+            operationId: "publishPackageRelease",
+            parameters: [
+                .parameter(.contentType(allowedValues: [.vnd_swift_registry("json")]))
+            ],
+            responses: [
+                100: .response(description: ""),
+                201: .response(
+                    description: "",
+                    headers: [
+                        "Content-Version": .reference(.component(named: "contentVersion")),
+                        "Content-Length": .header(.init(schema: .integer))
+                    ],
+                    content: [
+                        .json: .init(schema: .reference(.component(named: "releases")),
+                                     examples: [
+                                        "default": .reference(.component(named: "releases"))
+                                     ])
+                    ]
+                ),
+                202: .response(
+                    description: "",
+                    headers: [
+                        "Content-Version": .reference(.component(named: "contentVersion")),
+                        "Location": .header(.init(schema: .string)),
+                        "Retry-After": .header(.init(schema: .integer))
+                    ]
+                ),
+                .range(.clientError): .reference(.component(named: "problemDetails"))
+            ]
         )
     ),
 
@@ -162,47 +195,6 @@ var paths: OpenAPI.PathItem.Map = [
                                      examples: [
                                         "default": .reference(.component(named: "identifiers"))
                                      ])
-                    ]
-                ),
-                .range(.clientError): .reference(.component(named: "problemDetails"))
-            ]
-        )
-    ),
-
-    "/{scope}/{name}/{version}": .init(
-        parameters: [
-            .reference(.component(named: "scope")),
-            .reference(.component(named: "name")),
-            .reference(.component(named: "version"))
-        ],
-        post: .init(
-            tags: ["Package"],
-            summary: "Publish package release",
-            operationId: "publishPackageRelease",
-            parameters: [
-                .parameter(.contentType(allowedValues: [.vnd_swift_registry("json")]))
-            ],
-            responses: [
-                100: .response(description: ""),
-                201: .response(
-                    description: "",
-                    headers: [
-                        "Content-Version": .reference(.component(named: "contentVersion")),
-                        "Content-Length": .header(.init(schema: .integer))
-                    ],
-                    content: [
-                        .json: .init(schema: .reference(.component(named: "releases")),
-                                     examples: [
-                                        "default": .reference(.component(named: "releases"))
-                                     ])
-                    ]
-                ),
-                202: .response(
-                    description: "",
-                    headers: [
-                        "Content-Version": .reference(.component(named: "contentVersion")),
-                        "Location": .header(.init(schema: .string)),
-                        "Retry-After": .header(.init(schema: .integer))
                     ]
                 ),
                 .range(.clientError): .reference(.component(named: "problemDetails"))
