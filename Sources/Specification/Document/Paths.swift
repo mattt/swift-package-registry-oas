@@ -64,7 +64,7 @@ var paths: OpenAPI.PathItem.Map = [
             ]
         ),
         post: .init(
-            tags: ["Package"],
+            tags: ["Release"],
             summary: "Publish package release",
             operationId: "publishPackageRelease",
             parameters: [
