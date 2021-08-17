@@ -52,6 +52,31 @@ let components: OpenAPI.Components = {
         )
     ]
 
+    let requests: OpenAPI.ComponentDictionary<OpenAPI.Request> = {
+        return [
+            "releasePayload": .init(description: "", content: [
+                .multipartForm: .init(schema: .object(required: true, properties: [
+                    "source-archive": .string(format: .binary, required: true, description: "The source archive of the package."),
+                    "metadata": .object(format: .unspecified, required: false, description: "Additional information about the release."),
+                ]), encoding: [
+                    "source-archive": .init(contentType: .zip,
+                                            headers: [
+                                                "Content-Length": .header(.init(schema: .integer)),
+                                            ]),
+                    "metadata": .init(contentType: .json,
+                                      headers: [
+                                          "Content-Length": .header(.init(schema: .integer)),
+                                      ]),
+                    "source-archive": .init(contentType: .anyApplication,
+                                            headers: [
+                                                "Content-Length": .header(.init(schema: .integer)),
+                                            ])
+
+                ])
+            ], required: true, vendorExtensions: [:])
+        ]
+    }()
+
     let responses: OpenAPI.ComponentDictionary<OpenAPI.Response> = {
         return [
             "problemDetails": .init(description: "A client error.",

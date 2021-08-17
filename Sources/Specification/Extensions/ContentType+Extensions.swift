@@ -11,6 +11,5 @@ extension OpenAPI.ContentType {
     }
 
     static let swift = OpenAPI.ContentType(rawValue: "text/x-swift")!
-    static let zip = OpenAPI.ContentType(rawValue: "application/zip")!
     static let problem = OpenAPI.ContentType(rawValue: "application/problem+json")!
 }
