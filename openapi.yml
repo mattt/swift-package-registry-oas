@@ -77,6 +77,49 @@ paths:
                   $ref: "#/components/examples/metadata"
         4XX:
           $ref: "#/components/responses/problemDetails"
+    put:
+      tags:
+        - Release
+      summary: Publish package release
+      operationId: publishPackageRelease
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+            enum:
+              - application/vnd.swift.registry.v1+json
+      responses:
+        "100":
+          description: ""
+        "201":
+          description: ""
+          headers:
+            Content-Version:
+              $ref: "#/components/headers/contentVersion"
+            Content-Length:
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/releases"
+              examples:
+                default:
+                  $ref: "#/components/examples/releases"
+        "202":
+          description: ""
+          headers:
+            Content-Version:
+              $ref: "#/components/headers/contentVersion"
+            Location:
+              schema:
+                type: string
+            Retry-After:
+              schema:
+                type: integer
+        4XX:
+          $ref: "#/components/responses/problemDetails"
   "/{scope}/{name}/{version}/Package.swift":
     parameters:
       - $ref: "#/components/parameters/scope"
@@ -231,23 +274,23 @@ components:
         url: https://tools.ietf.org/html/rfc7807
       example:
         type: https://example.com/probs/out-of-credit
-        title: You do not have enough credit.
-        instance: /account/12345/msgs/abc
-        balance: 30
         accounts:
           - /account/12345
           - /account/67890
+        balance: 30
         detail: Your current balance is 30, but that costs 50.
+        title: You do not have enough credit.
+        instance: /account/12345/msgs/abc
       properties:
         instance:
           type: string
-        status:
-          type: number
         type:
           type: string
           format: uriref
         detail:
           type: string
+        status:
+          type: number
         title:
           type: string
       required:
@@ -327,14 +370,14 @@ components:
     releases:
       value:
         releases:
-          1.0.0:
-            url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
           1.1.0:
+            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
             problem:
               status: 410
               detail: this release was removed from the registry
               title: Gone
-            url: https://swift.pkg.github.com/mona/LinkedList/1.1.0
+          1.0.0:
+            url: https://swift.pkg.github.com/mona/LinkedList/1.0.0
           1.1.1:
             url: https://swift.pkg.github.com/mona/LinkedList/1.1.1
     manifest:
@@ -357,27 +400,27 @@ components:
         )
     metadata:
       value:
+        "@context":
+          - http://schema.org/
+        description: One thing links to another.
         keywords:
           - data-structure
           - collection
-        programmingLanguage:
-          name: Swift
-          url: https://swift.org
-          "@type": ComputerLanguage
-        "@type": SoftwareSourceCode
-        description: One thing links to another.
-        name: LinkedList
         version: 1.1.1
-        "@context":
-          - http://schema.org/
-        codeRepository: https://github.com/mona/LinkedList
-        license: MIT
+        name: LinkedList
+        "@type": SoftwareSourceCode
+        programmingLanguage:
+          "@type": ComputerLanguage
+          url: https://swift.org
+          name: Swift
         author:
-          familyName: Octocat
           "@type": Person
-          givenName: Mona
           "@id": https://github.com/mona
           middleName: Lisa
+          familyName: Octocat
+          givenName: Mona
+        codeRepository: https://github.com/mona/LinkedList
+        license: MIT
     identifiers:
       value:
         identifiers:
