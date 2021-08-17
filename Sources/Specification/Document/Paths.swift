@@ -63,7 +63,7 @@ var paths: OpenAPI.PathItem.Map = [
                 .range(.clientError): .reference(.component(named: "problemDetails"))
             ]
         ),
-        post: .init(
+        put: .init(
             tags: ["Release"],
             summary: "Publish package release",
             operationId: "publishPackageRelease",
