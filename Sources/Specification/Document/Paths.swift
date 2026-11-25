@@ -67,9 +67,7 @@ var paths: OpenAPI.PathItem.Map = [
             tags: ["Release"],
             summary: "Publish package release",
             operationId: "publishPackageRelease",
-            parameters: [
-                .parameter(.contentType(allowedValues: [.vnd_swift_registry("json")]))
-            ],
+            requestBody: .reference(.component(named: "releasePayload")),
             responses: [
                 100: .response(description: ""),
                 201: .response(

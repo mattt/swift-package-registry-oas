@@ -66,12 +66,7 @@ let components: OpenAPI.Components = {
                     "metadata": .init(contentType: .json,
                                       headers: [
                                           "Content-Length": .header(.init(schema: .integer)),
-                                      ]),
-                    "source-archive": .init(contentType: .anyApplication,
-                                            headers: [
-                                                "Content-Length": .header(.init(schema: .integer)),
-                                            ])
-
+                                      ])
                 ])
             ], required: true, vendorExtensions: [:])
         ]
@@ -220,6 +215,7 @@ let components: OpenAPI.Components = {
         responses: responses,
         parameters: parameters,
         examples: examples,
+        requestBodies: requests,
         headers: headers
     )
 }()
