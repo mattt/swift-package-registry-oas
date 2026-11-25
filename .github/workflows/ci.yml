@@ -8,19 +8,26 @@ on:
 
 jobs:
   test:
-    name: "Unit Tests"
+    name: "Unit Tests (Swift ${{ matrix.swift }})"
 
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        swift: ["5.3-focal", "6.4"]
 
     container:
-      image: swift:5.3
+      image: swift:${{ matrix.swift }}
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - uses: actions/checkout@v7
+      - name: Read the dependency lockfile hash
+        id: lockfile
+        run: echo "hash=$(git hash-object Package.resolved)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v6
         with:
           path: .build
-          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          key: ${{ runner.os }}-swift-${{ matrix.swift }}-spm-${{ steps.lockfile.outputs.hash }}
           restore-keys: |
-            ${{ runner.os }}-spm-
+            ${{ runner.os }}-swift-${{ matrix.swift }}-spm-
       - run: swift test --enable-test-discovery
