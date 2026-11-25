@@ -21,10 +21,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+      - name: Read the dependency lockfile hash
+        id: lockfile
+        run: echo "hash=$(git hash-object Package.resolved)" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@v6
         with:
           path: .build
-          key: ${{ runner.os }}-swift-${{ matrix.swift }}-spm-${{ hashFiles('**/Package.resolved') }}
+          key: ${{ runner.os }}-swift-${{ matrix.swift }}-spm-${{ steps.lockfile.outputs.hash }}
           restore-keys: |
             ${{ runner.os }}-swift-${{ matrix.swift }}-spm-
       - run: swift test --enable-test-discovery
